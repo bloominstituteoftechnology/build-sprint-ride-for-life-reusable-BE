@@ -34,6 +34,9 @@ router.post('/', (req, res) => {
     review.rider_id &&
     review.anonymous
   ) {
+    review.stars = review.stars > 5 ? 5 : review.stars;
+    review.stars = review.stars < 0 ? 0 : review.stars;
+
     Reviews.add(review)
       .then(saved => {
         saved.anonymous =
