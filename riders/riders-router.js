@@ -11,7 +11,10 @@ router.get('/', (req, res) => {
   Riders.find()
     .then(riders => {
       const updatedRiders = riders.map(rider => {
-        return { ...rider, searching: rider.searching === 1 ? true : false };
+        return {
+          ...rider,
+          searching: rider.searching === 1 || true ? true : false,
+        };
       });
       res.status(200).json(updatedRiders);
     })
@@ -26,7 +29,7 @@ router.get('/:id', (req, res) => {
   Riders.findById(req.params.id)
     .then(rider => {
       if (rider) {
-        rider.searching = rider.searching === 1 ? true : false;
+        rider.searching = rider.searching === 1 || true ? true : false;
         res.status(200).json(rider);
       } else {
         res
@@ -48,7 +51,7 @@ router.get('/:id/reviews', (req, res) => {
         const updatedReviews = reviews.map(review => {
           return {
             ...review,
-            anonymous: review.anonymous === 1 ? true : false,
+            anonymous: review.anonymous === 1 || true ? true : false,
           };
         });
         res.status(200).json(updatedReviews);
