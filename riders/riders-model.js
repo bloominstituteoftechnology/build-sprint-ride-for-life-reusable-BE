@@ -5,6 +5,7 @@ module.exports = {
   find,
   findById,
   findReviewsById,
+  remove,
 };
 
 function add(user) {
@@ -51,4 +52,10 @@ function findReviewsById(rider_id) {
     .join('drivers', 'drivers.id', 'reviews.driver_id')
     .where({ rider_id })
     .orderBy('reviews.id');
+}
+
+function remove(id) {
+  return db('riders')
+    .where({ id })
+    .del();
 }

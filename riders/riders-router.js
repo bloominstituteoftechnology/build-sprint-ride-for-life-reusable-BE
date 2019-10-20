@@ -75,5 +75,19 @@ router.get('/:id/reviews', (req, res) => {
 // PUT /api/riders/:id
 
 // DEL /api/riders/:id
+router.delete('/:id', (req, res) => {
+  Riders.remove(req.params.id)
+    .then(count => {
+      if (count) {
+        res.status(200).json({ message: 'The rider has been deleted' });
+      } else {
+        res.status(404).json({ message: 'Invalid rider ID' });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Error deleting the rider' });
+    });
+});
 
 module.exports = router;
