@@ -1,3 +1,7 @@
 const db = require('../data/db-config');
 
-module.exports = {};
+module.exports = { find };
+
+function find() {
+  return db('reviews');
+}

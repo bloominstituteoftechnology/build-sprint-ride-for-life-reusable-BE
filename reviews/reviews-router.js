@@ -4,10 +4,29 @@ const Reviews = require('./reviews-model');
 
 const router = express();
 
-// POST /api/reviews
+// GET /api/reviews endpoint - Functional!
+router.get('/', (req, res) => {
+  Reviews.find()
+    .then(reviews => {
+      const updatedReviews = reviews.map(review => {
+        return {
+          ...review,
+          anonymous:
+            review.anonymous === 1 || review.anonymous === true ? true : false,
+        };
+      });
+      res.status(200).json(updatedReviews);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to get reviews' });
+    });
+});
 
-// PUT /api/review/:id
+// POST /api/reviews endpoint
 
-// DEL /api/review/:id
+// PUT /api/review/:id endpoint
+
+// DEL /api/review/:id endpoint
 
 module.exports = router;

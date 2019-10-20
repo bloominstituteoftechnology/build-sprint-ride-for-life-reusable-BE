@@ -13,7 +13,8 @@ router.get('/', (req, res) => {
       const updatedRiders = riders.map(rider => {
         return {
           ...rider,
-          searching: rider.searching === 1 || true ? true : false,
+          searching:
+            rider.searching === 1 || rider.searching === true ? true : false,
         };
       });
       res.status(200).json(updatedRiders);
@@ -29,7 +30,8 @@ router.get('/:id', (req, res) => {
   Riders.findById(req.params.id)
     .then(rider => {
       if (rider) {
-        rider.searching = rider.searching === 1 || true ? true : false;
+        rider.searching =
+          rider.searching === 1 || rider.searching === true ? true : false;
         res.status(200).json(rider);
       } else {
         res
@@ -51,7 +53,10 @@ router.get('/:id/reviews', (req, res) => {
         const updatedReviews = reviews.map(review => {
           return {
             ...review,
-            anonymous: review.anonymous === 1 || true ? true : false,
+            anonymous:
+              review.anonymous === 1 || review.anonymous === true
+                ? true
+                : false,
           };
         });
         res.status(200).json(updatedReviews);

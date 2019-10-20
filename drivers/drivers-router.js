@@ -13,7 +13,8 @@ router.get('/', (req, res) => {
       const updatedDrivers = drivers.map(driver => {
         return {
           ...driver,
-          available: driver.available === 1 || true ? true : false,
+          available:
+            driver.available === 1 || driver.available === true ? true : false,
         };
       });
       res.status(200).json(updatedDrivers);
@@ -29,7 +30,8 @@ router.get('/:id', (req, res) => {
   Drivers.findById(req.params.id)
     .then(driver => {
       if (driver) {
-        driver.available = driver.available === 1 || true ? true : false;
+        driver.available =
+          driver.available === 1 || driver.available === true ? true : false;
         res.status(200).json(driver);
       } else {
         res
@@ -49,12 +51,15 @@ router.get('/:id/reviews', (req, res) => {
     .then(reviews => {
       if (reviews.length) {
         const updatedReviews = reviews.map(review => {
-          if (review.anonymous === 1 || true) {
+          if (review.anonymous === 1 || review.anonymous === true) {
             delete review.reviewer;
           }
           return {
             ...review,
-            anonymous: review.anonymous === 1 || true ? true : false,
+            anonymous:
+              review.anonymous === 1 || review.anonymous === true
+                ? true
+                : false,
           };
         });
         res.status(200).json(updatedReviews);
