@@ -2,17 +2,74 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const Users = require('./auth-model');
 const Drivers = require('../drivers/drivers-model');
 const Riders = require('../riders/riders-model');
+const Users = require('./auth-model');
 
 // const adminOnly = require('./admin-middleware');
+const validateUsername = require('./username-middleware.js');
 const secrets = require('../config/secrets');
 
 const router = express();
 
-router.post('/register', (req, res) => {});
+// POST /api/auth/register endpoint -
+router.post('/register', validateUsername, (req, res) => {
+  const user = req.body;
+  console.log('register object:', user);
 
+  if (user.role_id === 3) {
+    if (user.username && user.password && user.name) {
+      const hash = bcrypt.hashSync(user.password, 8);
+
+      user.password = hash;
+
+      Riders.add(user)
+        .then(saved => {
+          const token = generateToken(user);
+          res.status(201).json({ rider: saved, token });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({ message: 'Error adding new rider' });
+        });
+    } else {
+      res
+        .status(400)
+        .json({ message: 'Please provide registration information' });
+    }
+  } else if (user.role_id === 2) {
+    if (
+      user.username &&
+      user.password &&
+      user.name &&
+      user.location &&
+      user.price &&
+      user.bio
+    ) {
+      const hash = bcrypt.hashSync(user.password, 8);
+
+      user.password = hash;
+
+      Drivers.add(user)
+        .then(saved => {
+          const token = generateToken(user);
+          res.status(201).json({ driver: saved, token });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({ message: 'Error adding new driver' });
+        });
+    } else {
+      res
+        .status(400)
+        .json({ message: 'Please provide registration information' });
+    }
+  } else {
+    res.status(400).json({ message: 'Please provide valid user role' });
+  }
+});
+
+// POST /api/auth/login endpoint - Functional!
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -38,6 +95,7 @@ router.post('/login', (req, res) => {
     });
 });
 
+// GET /api/auth/users endpoint - Requires adminOnly middleware
 router.get('/users', (req, res) => {
   Users.findAll()
     .then(users => {
