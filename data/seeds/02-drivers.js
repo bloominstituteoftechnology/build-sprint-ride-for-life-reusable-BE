@@ -1,13 +1,88 @@
+const bcrypt = require('bcryptjs');
 
 exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
-    });
+  return knex('drivers').insert([
+    {
+      username: 'Heisenberg',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Walter White',
+      location: 'New Hampshire',
+      price: 150,
+      bio:
+        'Chemistry teacher Walter White learns he has cancer and becomes a meth manufacturer.',
+      available: 1,
+    },
+    {
+      username: 'Skyler',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Skyler White',
+      location: 'New Mexico',
+      price: 150,
+      bio: `Skyler White is Walt's wife, a mother of two and co-owner of A1A Car Wash.`,
+      available: 1,
+    },
+    {
+      username: 'Jesse',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Jesse Pinkman',
+      location: 'Alaska',
+      price: 150,
+      bio: `Jesse Pinkman is a former student of Walt's and his meth-making partner.`,
+      available: 1,
+    },
+    {
+      username: 'WaltJr',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Walter White Jr',
+      location: 'New Mexico',
+      price: 150,
+      bio: `Born with cerebral palsy, Walter White, Jr. is Walter and Skyler's teenage son.`,
+      available: 1,
+    },
+    {
+      username: 'Hank',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Hank Schrader',
+      location: 'New Mexico',
+      price: 150,
+      bio: `Hank is Walter's macho brother-in-law. He is also a DEA agent.`,
+      available: 1,
+    },
+    {
+      username: 'Marie',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Marie Schrader',
+      location: 'New Mexico',
+      price: 150,
+      bio: `Marie is Skyler's sister and the wife of DEA agent Hank Schrader.`,
+      available: 1,
+    },
+    {
+      username: 'Saul',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Saul Goodman',
+      location: 'New Mexico',
+      price: 150,
+      bio: `Saul Goodman is Walt and Jesse's attorney. He's the quintessential shady lawyer.`,
+      available: 1,
+    },
+    {
+      username: 'Lydia',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Lydia Rodarte-Quayle',
+      location: 'Texas',
+      price: 150,
+      bio: `The Head of Logistics at Madrigal Electromotive, Lydia was Gus Fring's methylamine supplier.`,
+      available: 1,
+    },
+    {
+      username: 'Todd',
+      password: bcrypt.hashSync('driver', 14),
+      name: 'Todd Alquist',
+      location: 'New Mexico',
+      price: 150,
+      bio: `Todd is Walt's former lab assistant whose uncle's prison connections prove invaluable.`,
+      available: 1,
+    },
+  ]);
 };
