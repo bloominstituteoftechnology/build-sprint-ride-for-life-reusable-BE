@@ -30,7 +30,8 @@ router.post('/register', validateUsername, (req, res) => {
       Riders.add(user)
         .then(saved => {
           const token = generateToken(user);
-          saved.searching = saved.searching === 1 ? true : false;
+          saved.searching =
+            saved.searching === 1 ? saved.searching === true : false;
           res.status(201).json({ rider: saved, token });
         })
         .catch(err => {
@@ -62,7 +63,8 @@ router.post('/register', validateUsername, (req, res) => {
       Drivers.add(user)
         .then(saved => {
           const token = generateToken(user);
-          saved.available = saved.available === 1 ? true : false;
+          saved.available =
+            saved.available === 1 ? saved.available === true : false;
           res.status(201).json({ driver: saved, token });
         })
         .catch(err => {
