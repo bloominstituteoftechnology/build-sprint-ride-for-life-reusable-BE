@@ -28,7 +28,8 @@ function find() {
       'bio',
       'available',
     )
-    .join('roles', 'roles.id', 'drivers.role_id');
+    .join('roles', 'roles.id', 'drivers.role_id')
+    .orderBy('drivers.id');
 }
 
 function findById(id) {
@@ -50,5 +51,6 @@ function findReviewsById(id) {
   return db('reviews')
     .select('stars', 'comment', 'date', 'anonymous', 'name as reviewer')
     .join('riders', 'riders.id', 'reviews.rider_id')
-    .where({ driver_id: id });
+    .where({ driver_id: id })
+    .orderBy('reviews.id');
 }

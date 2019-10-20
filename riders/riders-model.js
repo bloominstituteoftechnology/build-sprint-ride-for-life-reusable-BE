@@ -26,7 +26,8 @@ function find() {
       'location',
       'searching',
     )
-    .join('roles', 'roles.id', 'riders.role_id');
+    .join('roles', 'roles.id', 'riders.role_id')
+    .orderBy('riders.id');
 }
 
 function findById(id) {
@@ -47,5 +48,6 @@ function findReviewsById(rider_id) {
       'anonymous',
     )
     .join('drivers', 'drivers.id', 'reviews.driver_id')
-    .where({ rider_id });
+    .where({ rider_id })
+    .orderBy('reviews.id');
 }
