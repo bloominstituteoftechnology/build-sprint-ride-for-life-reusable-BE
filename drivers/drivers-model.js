@@ -49,7 +49,14 @@ function findById(id) {
 
 function findReviewsById(id) {
   return db('reviews')
-    .select('stars', 'comment', 'date', 'anonymous', 'name as reviewer')
+    .select(
+      'stars',
+      'comment',
+      'date',
+      'anonymous',
+      'rider_id',
+      'name as reviewer',
+    )
     .join('riders', 'riders.id', 'reviews.rider_id')
     .where({ driver_id: id })
     .orderBy('reviews.id');

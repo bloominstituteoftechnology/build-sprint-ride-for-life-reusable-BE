@@ -41,6 +41,7 @@ function findReviewsById(rider_id) {
   return db('reviews')
     .select(
       'reviews.id as review_id',
+      'rider_id',
       'stars',
       'comment',
       'date',
