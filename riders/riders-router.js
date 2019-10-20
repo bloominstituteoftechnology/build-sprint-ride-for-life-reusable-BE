@@ -21,6 +21,30 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET /api/riders/:id/reviews endpoint - Functional!
+router.get('/:id/reviews', (req, res) => {
+  Riders.findReviewsById(req.params.id)
+    .then(reviews => {
+      if (reviews.length) {
+        const updatedReviews = reviews.map(review => {
+          return {
+            ...review,
+            anonymous: review.anonymous === 1 ? true : false,
+          };
+        });
+        res.status(200).json(updatedReviews);
+      } else {
+        res
+          .status(404)
+          .json({ message: 'Could not find reviews by that rider' });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to get reviews' });
+    });
+});
+
 // PUT /api/riders/:id
 
 // DEL /api/riders/:id

@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET /api/drivers/:id endpoint
+// GET /api/drivers/:id endpoint - Functional!
 router.get('/:id', (req, res) => {
   Drivers.findById(req.params.id)
     .then(driver => {
@@ -40,7 +40,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// GET /api/drivers/:id/reviews endpoint
+// GET /api/drivers/:id/reviews endpoint - Functional!
 router.get('/:id/reviews', (req, res) => {
   Drivers.findReviewsById(req.params.id)
     .then(reviews => {

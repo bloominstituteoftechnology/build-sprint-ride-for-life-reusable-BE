@@ -4,6 +4,7 @@ module.exports = {
   add,
   find,
   findById,
+  findReviewsById,
 };
 
 function add(user) {
@@ -33,4 +34,18 @@ function findById(id) {
     .select('id', 'username', 'name', 'location', 'searching')
     .where({ id })
     .first();
+}
+
+function findReviewsById(rider_id) {
+  return db('reviews')
+    .select(
+      'reviews.id as review_id',
+      'stars',
+      'comment',
+      'date',
+      'name as driver',
+      'anonymous',
+    )
+    .join('drivers', 'drivers.id', 'reviews.driver_id')
+    .where({ rider_id });
 }
