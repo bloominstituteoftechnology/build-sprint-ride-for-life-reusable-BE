@@ -78,5 +78,19 @@ router.get('/:id/reviews', (req, res) => {
 // PUT /api/drivers/:id endpoint
 
 // DEL /api/drivers/:id endpoint
+router.delete('/:id', (req, res) => {
+  Drivers.remove(req.params.id)
+    .then(count => {
+      if (count) {
+        res.status(200).json({ message: 'The driver has been deleted' });
+      } else {
+        res.status(404).json({ message: 'Invalid driver ID' });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Error deleting the driver' });
+    });
+});
 
 module.exports = router;
