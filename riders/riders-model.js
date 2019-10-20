@@ -31,7 +31,7 @@ function find() {
 
 function findById(id) {
   return db('riders')
-    .select('id', 'username', 'name', 'location', 'searching')
+    .select('id as rider_id', 'username', 'name', 'location', 'searching')
     .where({ id })
     .first();
 }

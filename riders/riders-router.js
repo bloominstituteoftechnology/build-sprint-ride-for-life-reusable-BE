@@ -21,6 +21,25 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET /api/riders/:id endpoint -
+router.get('/:id', (req, res) => {
+  Riders.findById(req.params.id)
+    .then(rider => {
+      if (rider) {
+        rider.searching = rider.searching === 1 ? true : false;
+        res.status(200).json(rider);
+      } else {
+        res
+          .status(404)
+          .json({ message: 'Could not find rider with provided ID' });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to get rider' });
+    });
+});
+
 // GET /api/riders/:id/reviews endpoint - Functional!
 router.get('/:id/reviews', (req, res) => {
   Riders.findReviewsById(req.params.id)

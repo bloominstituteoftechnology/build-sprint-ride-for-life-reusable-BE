@@ -6,7 +6,7 @@ const Drivers = require('./drivers-model');
 
 const router = express();
 
-// GET /api/drivers endpoint
+// GET /api/drivers endpoint - Functional!
 router.get('/', (req, res) => {
   Drivers.find()
     .then(drivers => {
@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
       } else {
         res
           .status(404)
-          .json({ message: 'Could not find driver with given ID' });
+          .json({ message: 'Could not find driver with provided ID' });
       }
     })
     .catch(err => {
