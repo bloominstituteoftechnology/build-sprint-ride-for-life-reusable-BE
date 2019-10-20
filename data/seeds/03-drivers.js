@@ -5,6 +5,7 @@ exports.seed = function(knex) {
     {
       username: 'Heisenberg',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Walter White',
       location: 'New Hampshire',
       price: 150,
@@ -15,6 +16,7 @@ exports.seed = function(knex) {
     {
       username: 'Skyler',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Skyler White',
       location: 'New Mexico',
       price: 150,
@@ -24,6 +26,7 @@ exports.seed = function(knex) {
     {
       username: 'Jesse',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Jesse Pinkman',
       location: 'Alaska',
       price: 150,
@@ -33,6 +36,7 @@ exports.seed = function(knex) {
     {
       username: 'WaltJr',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Walter White Jr',
       location: 'New Mexico',
       price: 150,
@@ -42,6 +46,7 @@ exports.seed = function(knex) {
     {
       username: 'Hank',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Hank Schrader',
       location: 'New Mexico',
       price: 150,
@@ -51,6 +56,7 @@ exports.seed = function(knex) {
     {
       username: 'Marie',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Marie Schrader',
       location: 'New Mexico',
       price: 150,
@@ -60,6 +66,7 @@ exports.seed = function(knex) {
     {
       username: 'Saul',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Saul Goodman',
       location: 'New Mexico',
       price: 150,
@@ -69,6 +76,7 @@ exports.seed = function(knex) {
     {
       username: 'Lydia',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Lydia Rodarte-Quayle',
       location: 'Texas',
       price: 150,
@@ -78,6 +86,7 @@ exports.seed = function(knex) {
     {
       username: 'Todd',
       password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
       name: 'Todd Alquist',
       location: 'New Mexico',
       price: 150,

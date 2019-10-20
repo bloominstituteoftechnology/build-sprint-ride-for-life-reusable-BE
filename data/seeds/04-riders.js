@@ -5,6 +5,7 @@ exports.seed = function(knex) {
     {
       username: 'Robert',
       password: bcrypt.hashSync('rider', 8),
+      role_id: 3,
       name: 'Robert Gordon',
       location: '',
       searching: 1,
@@ -12,6 +13,7 @@ exports.seed = function(knex) {
     {
       username: 'Stephanie',
       password: bcrypt.hashSync('rider', 8),
+      role_id: 3,
       name: 'Stephanie Butenhof',
       location: '',
       searching: 1,
@@ -19,6 +21,7 @@ exports.seed = function(knex) {
     {
       username: 'Arin',
       password: bcrypt.hashSync('rider', 8),
+      role_id: 3,
       name: 'Arin Ramer',
       location: '',
       searching: 1,
@@ -26,6 +29,7 @@ exports.seed = function(knex) {
     {
       username: 'Mark',
       password: bcrypt.hashSync('rider', 8),
+      role_id: 3,
       name: 'Mark King',
       location: '',
       searching: 1,
@@ -33,6 +37,7 @@ exports.seed = function(knex) {
     {
       username: 'Jonathan',
       password: bcrypt.hashSync('rider', 8),
+      role_id: 3,
       name: 'Jonathan Ho',
       location: '',
       searching: 1,
@@ -40,6 +45,7 @@ exports.seed = function(knex) {
     {
       username: 'Thomas',
       password: bcrypt.hashSync('rider', 8),
+      role_id: 3,
       name: 'Thomas Utsey',
       location: '',
       searching: 1,

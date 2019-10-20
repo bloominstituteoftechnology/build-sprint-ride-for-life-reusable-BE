@@ -1,5 +1,12 @@
 exports.up = function(knex) {
   return knex.schema
+    .createTable('roles', tbl => {
+      tbl.increments();
+      tbl
+        .string('role', 128)
+        .notNullable()
+        .unique();
+    })
     .createTable('admin', tbl => {
       tbl.increments();
       tbl
@@ -7,6 +14,15 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       tbl.string('password', 128).notNullable();
+      tbl
+        .integer('role_id')
+        .unsigned()
+        .notNullable()
+        .defaultTo(1)
+        .references('id')
+        .inTable('roles')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
     })
     .createTable('drivers', tbl => {
       tbl.increments();
@@ -15,6 +31,15 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       tbl.string('password', 128).notNullable();
+      tbl
+        .integer('role_id')
+        .unsigned()
+        .notNullable()
+        .defaultTo(2)
+        .references('id')
+        .inTable('roles')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
       tbl
         .string('name', 128)
         .notNullable()
@@ -34,6 +59,15 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       tbl.string('password', 128).notNullable();
+      tbl
+        .integer('role_id')
+        .unsigned()
+        .notNullable()
+        .defaultTo(3)
+        .references('id')
+        .inTable('roles')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
       tbl.string('name', 128).notNullable();
       tbl.string('location', 128);
       tbl
