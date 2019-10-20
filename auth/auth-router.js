@@ -89,12 +89,21 @@ router.post('/login', (req, res) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
 
-        res.status(200).json({
-          id: user.id,
-          username: user.username,
-          role: user.role,
-          token,
-        });
+        if (user.role === 'driver') {
+          res.status(200).json({
+            driver_id: user.id,
+            username: user.username,
+            role: user.role,
+            token,
+          });
+        } else if (user.role === 'rider') {
+          res.status(200).json({
+            rider_id: user.id,
+            username: user.username,
+            role: user.role,
+            token,
+          });
+        }
       } else {
         res.status(401).json({ message: 'Improper login credentials' });
       }

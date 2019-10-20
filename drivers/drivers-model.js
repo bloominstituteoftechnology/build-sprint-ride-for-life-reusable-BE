@@ -2,7 +2,9 @@ const db = require('../data/db-config');
 
 module.exports = {
   add,
+  find,
   findById,
+  findReviewsById,
 };
 
 function add(user) {
@@ -14,9 +16,39 @@ function add(user) {
     });
 }
 
+function find() {
+  return db('drivers')
+    .select(
+      'drivers.id as driver_id',
+      'username',
+      'role',
+      'name',
+      'location',
+      'price',
+      'bio',
+      'available',
+    )
+    .join('roles', 'roles.id', 'drivers.role_id');
+}
+
 function findById(id) {
   return db('drivers')
-    .select('id', 'username', 'name', 'location', 'price', 'bio', 'available')
+    .select(
+      'id as driver_id',
+      'username',
+      'name',
+      'location',
+      'price',
+      'bio',
+      'available',
+    )
     .where({ id })
     .first();
+}
+
+function findReviewsById(id) {
+  return db('reviews')
+    .select('stars', 'comment', 'date', 'anonymous', 'name as reviewer')
+    .join('riders', 'riders.id', 'reviews.rider_id')
+    .where({ driver_id: id });
 }
