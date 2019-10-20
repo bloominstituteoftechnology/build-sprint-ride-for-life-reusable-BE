@@ -4,6 +4,7 @@ module.exports = {
   add,
   find,
   findById,
+  remove,
 };
 
 function add(review) {
@@ -23,4 +24,10 @@ function findById(id) {
   return db('reviews')
     .where({ id })
     .first();
+}
+
+function remove(id) {
+  return db('reviews')
+    .where({ id })
+    .del();
 }

@@ -50,6 +50,7 @@ function findById(id) {
 function findReviewsById(id) {
   return db('reviews')
     .select(
+      'reviews.id as review_id',
       'stars',
       'comment',
       'date',
