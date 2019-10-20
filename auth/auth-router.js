@@ -12,16 +12,20 @@ const secrets = require('../config/secrets');
 
 const router = express();
 
-// POST /api/auth/register endpoint -
+// POST /api/auth/register endpoint - Functional!
 router.post('/register', validateUsername, (req, res) => {
   const user = req.body;
   console.log('register object:', user);
 
-  if (user.role_id === 3) {
+  if (user.role === 'rider') {
     if (user.username && user.password && user.name) {
       const hash = bcrypt.hashSync(user.password, 8);
 
       user.password = hash;
+      user.role_id = 3;
+      delete user.role;
+
+      console.log('rider to register:', user);
 
       Riders.add(user)
         .then(saved => {
@@ -37,7 +41,7 @@ router.post('/register', validateUsername, (req, res) => {
         .status(400)
         .json({ message: 'Please provide registration information' });
     }
-  } else if (user.role_id === 2) {
+  } else if (user.role === 'driver') {
     if (
       user.username &&
       user.password &&
@@ -49,6 +53,10 @@ router.post('/register', validateUsername, (req, res) => {
       const hash = bcrypt.hashSync(user.password, 8);
 
       user.password = hash;
+      user.role_id = 2;
+      delete user.role;
+
+      console.log('driver to register:', user);
 
       Drivers.add(user)
         .then(saved => {

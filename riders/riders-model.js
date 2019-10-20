@@ -2,6 +2,7 @@ const db = require('../data/db-config');
 
 module.exports = {
   add,
+  find,
   findById,
 };
 
@@ -12,6 +13,19 @@ function add(user) {
       const [id] = ids;
       return findById(id);
     });
+}
+
+function find() {
+  return db('riders')
+    .select(
+      'riders.id as rider_id',
+      'username',
+      'role',
+      'name',
+      'location',
+      'searching',
+    )
+    .join('roles', 'roles.id', 'riders.role_id');
 }
 
 function findById(id) {
