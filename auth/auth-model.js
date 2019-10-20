@@ -18,7 +18,8 @@ function findAll() {
         'bio',
         'available',
       )
-      .join('roles', 'roles.id', 'drivers.role_id'),
+      .join('roles', 'roles.id', 'drivers.role_id')
+      .orderBy('drivers.id'),
     db('riders')
       .select(
         'riders.id as rider_id',
@@ -28,7 +29,8 @@ function findAll() {
         'location',
         'searching',
       )
-      .join('roles', 'roles.id', 'riders.role_id'),
+      .join('roles', 'roles.id', 'riders.role_id')
+      .orderBy('riders.id'),
   ];
 
   return Promise.all(promises).then(results => {
