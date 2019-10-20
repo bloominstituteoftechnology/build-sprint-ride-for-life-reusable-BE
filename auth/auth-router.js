@@ -15,7 +15,7 @@ const router = express();
 // POST /api/auth/register endpoint - Functional!
 router.post('/register', validateUsername, (req, res) => {
   const user = req.body;
-  console.log('register object:', user);
+  // console.log('register object:', user);
 
   if (user.role === 'rider') {
     if (user.username && user.password && user.name) {
@@ -25,7 +25,7 @@ router.post('/register', validateUsername, (req, res) => {
       user.role_id = 3;
       delete user.role;
 
-      console.log('rider to register:', user);
+      // console.log('rider to register:', user);
 
       Riders.add(user)
         .then(saved => {

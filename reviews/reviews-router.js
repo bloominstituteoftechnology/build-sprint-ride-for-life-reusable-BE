@@ -23,10 +23,34 @@ router.get('/', (req, res) => {
     });
 });
 
-// POST /api/reviews endpoint
+// POST /api/reviews endpoint - Functional!
+router.post('/', (req, res) => {
+  const review = req.body;
 
-// PUT /api/review/:id endpoint
+  if (
+    review.stars &&
+    review.date &&
+    review.driver_id &&
+    review.rider_id &&
+    review.anonymous
+  ) {
+    Reviews.add(review)
+      .then(saved => {
+        saved.anonymous =
+          saved.anonymous === 1 || saved.anonymous === true ? true : false;
+        res.status(201).json({ review: saved });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: 'Error adding new review' });
+      });
+  } else {
+    res.status(400).json({ message: 'Please provide review information' });
+  }
+});
 
-// DEL /api/review/:id endpoint
+// PUT /api/review/:id endpoint -
+
+// DEL /api/review/:id endpoint -
 
 module.exports = router;
