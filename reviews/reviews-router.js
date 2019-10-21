@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
   }
 });
 
-// PUT /api/review/:id endpoint -
+// PUT /api/review/:id endpoint - Functional!
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -84,11 +84,13 @@ router.put('/:id', (req, res) => {
         res.status(500).json({ message: 'Failed to update review' });
       });
   } else {
-    res.status(400).json({ message: 'Please provide information to update' });
+    res
+      .status(400)
+      .json({ message: 'Please provide review information to update' });
   }
 });
 
-// DEL /api/review/:id endpoint -
+// DEL /api/review/:id endpoint - Functional!
 router.delete('/:id', (req, res) => {
   Reviews.remove(req.params.id)
     .then(count => {

@@ -1,8 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const Drivers = require('./drivers-model');
+const checkPassword = require('../riders/riderpw-middleware');
 
 const router = express();
 
@@ -75,9 +75,54 @@ router.get('/:id/reviews', (req, res) => {
     });
 });
 
-// PUT /api/drivers/:id endpoint
+// PUT /api/drivers/:id endpoint -
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
 
-// DEL /api/drivers/:id endpoint
+  if (
+    changes.hasOwnProperty('name') ||
+    changes.hasOwnProperty('newPassword') ||
+    changes.hasOwnProperty('location') ||
+    changes.hasOwnProperty('price') ||
+    changes.hasOwnProperty('bio') ||
+    changes.hasOwnProperty('available')
+  ) {
+    const hash = bcrypt.hashSync(changes.newPassword, 8);
+
+    changes.password = hash;
+    delete changes.newPassword;
+
+    Drivers.findById(id)
+      .then(driver => {
+        if (driver) {
+          Drivers.update(changes, id).then(updated => {
+            updated.available =
+              updated.available === 1 || updated.available === true
+                ? true
+                : false;
+            res.status(200).json(updated);
+          });
+        } else {
+          res
+            .status(404)
+            .json({ message: 'Could not find driver with provided ID' });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res
+          .status(500)
+          .json({ message: 'Failed to update driver information' });
+      });
+  } else {
+    res
+      .status(400)
+      .json({ message: 'Please provide driver information to update' });
+  }
+});
+
+// DEL /api/drivers/:id endpoint - Functional!
 router.delete('/:id', (req, res) => {
   Drivers.remove(req.params.id)
     .then(count => {
