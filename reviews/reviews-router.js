@@ -53,6 +53,40 @@ router.post('/', (req, res) => {
 });
 
 // PUT /api/review/:id endpoint -
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  if (
+    changes.hasOwnProperty('stars') ||
+    changes.hasOwnProperty('comment') ||
+    changes.hasOwnProperty('date') ||
+    changes.hasOwnProperty('anonymous')
+  ) {
+    Reviews.findById(id)
+      .then(review => {
+        if (review) {
+          Reviews.update(changes, id).then(updated => {
+            updated.anonymous =
+              updated.anonymous === 1 || updated.anonymous === true
+                ? true
+                : false;
+            res.status(200).json(updated);
+          });
+        } else {
+          res
+            .status(404)
+            .json({ message: 'Could not find review with provided ID' });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: 'Failed to update review' });
+      });
+  } else {
+    res.status(400).json({ message: 'Please provide information to update' });
+  }
+});
 
 // DEL /api/review/:id endpoint -
 router.delete('/:id', (req, res) => {

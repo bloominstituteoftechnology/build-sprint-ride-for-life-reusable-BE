@@ -5,6 +5,7 @@ module.exports = {
   find,
   findById,
   remove,
+  update,
 };
 
 function add(review) {
@@ -30,4 +31,11 @@ function remove(id) {
   return db('reviews')
     .where({ id })
     .del();
+}
+
+function update(changes, id) {
+  return db('reviews')
+    .where({ id })
+    .update(changes)
+    .then(count => findById(id));
 }

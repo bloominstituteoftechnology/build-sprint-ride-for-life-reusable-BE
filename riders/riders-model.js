@@ -6,6 +6,7 @@ module.exports = {
   findById,
   findReviewsById,
   remove,
+  update,
 };
 
 function add(user) {
@@ -58,4 +59,11 @@ function remove(id) {
   return db('riders')
     .where({ id })
     .del();
+}
+
+function update(changes, id) {
+  return db('riders')
+    .where({ id })
+    .update(changes)
+    .then(count => findById(id));
 }
