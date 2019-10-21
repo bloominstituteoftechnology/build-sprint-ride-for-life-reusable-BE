@@ -15,7 +15,6 @@ const router = express();
 // POST /api/auth/register endpoint - Functional!
 router.post('/register', validateUsername, (req, res) => {
   const user = req.body;
-  // console.log('register object:', user);
 
   if (user.role === 'rider') {
     if (user.username && user.password && user.name) {
@@ -25,8 +24,6 @@ router.post('/register', validateUsername, (req, res) => {
       user.role_id = 3;
       delete user.role;
 
-      // console.log('rider to register:', user);
-
       Riders.add(user)
         .then(saved => {
           const token = generateToken(user);
@@ -35,7 +32,6 @@ router.post('/register', validateUsername, (req, res) => {
           res.status(201).json({ rider: saved, token });
         })
         .catch(err => {
-          console.log(err);
           res.status(500).json({ message: 'Error adding new rider' });
         });
     } else {
@@ -58,7 +54,7 @@ router.post('/register', validateUsername, (req, res) => {
       user.role_id = 2;
       delete user.role;
 
-      console.log('driver to register:', user);
+      // console.log('driver to register:', user);
 
       Drivers.add(user)
         .then(saved => {
@@ -89,6 +85,7 @@ router.post('/login', (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
+        // console.log(user);
         const token = generateToken(user);
 
         if (user.role === 'driver') {
@@ -132,6 +129,7 @@ function generateToken(user) {
   const payload = {
     subject: user.id,
     username: user.username,
+    role: user.role,
   };
   const options = {
     expiresIn: '1d',
