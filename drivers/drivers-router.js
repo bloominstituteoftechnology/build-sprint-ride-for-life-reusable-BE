@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const Drivers = require('./drivers-model');
-const checkPassword = require('../riders/riderpw-middleware');
+const checkPassword = require('./driverpw-middleware');
 
 const router = express();
 
@@ -76,7 +76,7 @@ router.get('/:id/reviews', (req, res) => {
 });
 
 // PUT /api/drivers/:id endpoint -
-router.put('/:id', (req, res) => {
+router.put('/:id', checkPassword, (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
@@ -88,10 +88,13 @@ router.put('/:id', (req, res) => {
     changes.hasOwnProperty('bio') ||
     changes.hasOwnProperty('available')
   ) {
-    const hash = bcrypt.hashSync(changes.newPassword, 8);
-
-    changes.password = hash;
-    delete changes.newPassword;
+    if (changes.hasOwnProperty('newPassword')) {
+      const hash = bcrypt.hashSync(changes.newPassword, 8);
+      changes.password = hash;
+      delete changes.newPassword;
+    } else {
+      delete changes.password;
+    }
 
     Drivers.findById(id)
       .then(driver => {

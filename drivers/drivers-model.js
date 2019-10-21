@@ -4,6 +4,7 @@ module.exports = {
   add,
   find,
   findById,
+  findPwById,
   findReviewsById,
   remove,
   update,
@@ -45,6 +46,13 @@ function findById(id) {
       'bio',
       'available',
     )
+    .where({ id })
+    .first();
+}
+
+function findPwById(id) {
+  return db('drivers')
+    .select('password')
     .where({ id })
     .first();
 }

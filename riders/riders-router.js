@@ -32,7 +32,6 @@ router.get('/:id', (req, res) => {
       if (rider) {
         rider.searching =
           rider.searching === 1 || rider.searching === true ? true : false;
-        delete rider.password;
         res.status(200).json(rider);
       } else {
         res
@@ -73,7 +72,7 @@ router.get('/:id/reviews', (req, res) => {
     });
 });
 
-// PUT /api/riders/:id endpoint -
+// PUT /api/riders/:id endpoint - Functional!
 router.put('/:id', checkPassword, (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -86,7 +85,6 @@ router.put('/:id', checkPassword, (req, res) => {
   ) {
     if (changes.hasOwnProperty('newPassword')) {
       const hash = bcrypt.hashSync(changes.newPassword, 8);
-
       changes.password = hash;
       delete changes.newPassword;
     } else {
@@ -101,7 +99,6 @@ router.put('/:id', checkPassword, (req, res) => {
               updated.searching === 1 || updated.searching === true
                 ? true
                 : false;
-            delete updated.password;
             res.status(200).json(updated);
           });
         } else {

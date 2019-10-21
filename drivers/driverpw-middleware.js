@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs');
-const Riders = require('./riders-model');
+const Drivers = require('./drivers-model');
 
 module.exports = (req, res, next) => {
   const { id } = req.params;
   const { password } = req.body;
 
-  Riders.findPwById(id)
+  Drivers.findPwById(id)
     .first()
     .then(user => {
       if (password && bcrypt.compareSync(password, user.password)) {
@@ -16,6 +16,6 @@ module.exports = (req, res, next) => {
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({ message: 'Error finding rider' });
+      res.status(500).json({ message: 'Error finding driver' });
     });
 };

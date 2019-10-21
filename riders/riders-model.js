@@ -4,6 +4,7 @@ module.exports = {
   add,
   find,
   findById,
+  findPwById,
   findReviewsById,
   remove,
   update,
@@ -34,14 +35,14 @@ function find() {
 
 function findById(id) {
   return db('riders')
-    .select(
-      'id as rider_id',
-      'username',
-      'password',
-      'name',
-      'location',
-      'searching',
-    )
+    .select('id as rider_id', 'username', 'name', 'location', 'searching')
+    .where({ id })
+    .first();
+}
+
+function findPwById(id) {
+  return db('riders')
+    .select('password')
     .where({ id })
     .first();
 }
