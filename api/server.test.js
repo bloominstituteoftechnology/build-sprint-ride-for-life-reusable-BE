@@ -2,6 +2,7 @@ const request = require('supertest');
 
 const server = require('./server');
 
+// Test passes!
 describe('GET /', () => {
   it('should return http 200 status code', async () => {
     const response = await request(server).get('/');
