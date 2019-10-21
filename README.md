@@ -10,17 +10,17 @@ SAFE serves mothers in Uganda to improve maternal and child survival. One of the
 
 ## Backend Developer (Node)
 
-Jonathan Ho
-[LinkedIn](https://www.linkedin.com/in/jonathan-y-ho/ 'LinkedIn')
-[Portfolio](https://jonathan-ho.dev 'jonathan-ho.dev')
+Jonathan Ho  
+[LinkedIn](https://www.linkedin.com/in/jonathan-y-ho/ 'LinkedIn')  
+[Portfolio](https://jonathan-ho.dev 'jonathan-ho.dev')  
 [GitHub](https://github.com/Jonathan-YungHsin-Ho 'Jonathan-YungHsin-Ho')
 
 ## Tech Stack
 
 - Node.js
-- Express
+- Express  
 
-  **Dependencies:**
+**Dependencies:**
 
 - brcyptjs
 - cors
@@ -32,7 +32,7 @@ Jonathan Ho
 - pg
 - sqlite3
 
-  **Development Dependencies:**
+**Development Dependencies:**
 
 - cross-env
 - jest
@@ -41,8 +41,8 @@ Jonathan Ho
 
 ## Deployment
 
-**Marketing Site:** Awaiting deployment
-**React App:** Awaiting deployment
+**Marketing Site:** Awaiting deployment  
+**React App:** Awaiting deployment  
 **Backend API:** https://rideforlife-backend.herokuapp.com/
 
 ## Postman Documentation
