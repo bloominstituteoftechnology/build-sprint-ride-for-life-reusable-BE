@@ -23,7 +23,7 @@ server.use('/api/drivers', restricted, DriverRouter);
 server.use('/api/reviews', restricted, ReviewRouter);
 
 server.get('/', (req, res) => {
-  res.send('Hello World from RideForLife Backend!');
+  res.json({ message: 'Hello World from RideForLife Backend API!' });
 });
 
 module.exports = server;
