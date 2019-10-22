@@ -29,7 +29,6 @@ describe('POST /api/auth/register - For BOTH rider & driver user types', () => {
       });
 
     expect(response.status).toBe(400);
-
     expect(response.body).toEqual({
       message: 'Please provide valid user role',
     });
@@ -172,7 +171,7 @@ describe('POST /api/auth/register - for driver user type', () => {
   });
 });
 
-// Needs to be tested
+// Test passes!
 describe('POST /api/auth/login', () => {
   beforeEach(async () => {
     await db('riders').truncate();
