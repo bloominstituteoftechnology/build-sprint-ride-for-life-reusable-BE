@@ -5,10 +5,11 @@ const server = require('../api/server');
 const db = require('../data/db-config');
 
 // Test passes!
-describe('POST /api/auth/register - For BOTH rider & driver user types', () => {
+xdescribe('POST /api/auth/register - For BOTH rider & driver user types', () => {
   beforeEach(async () => {
     await db('riders').truncate();
     await db('drivers').truncate();
+    await db('reviews').truncate();
   });
 
   it('should return 500 and proper message if missing username', async () => {
@@ -36,10 +37,11 @@ describe('POST /api/auth/register - For BOTH rider & driver user types', () => {
 });
 
 // Test passes!
-describe('POST /api/auth/register - for rider user type', () => {
+xdescribe('POST /api/auth/register - for rider user type', () => {
   beforeEach(async () => {
     await db('riders').truncate();
     await db('drivers').truncate();
+    await db('reviews').truncate();
   });
 
   it('should return 400 and proper message if missing information', async () => {
@@ -101,10 +103,11 @@ describe('POST /api/auth/register - for rider user type', () => {
 });
 
 // Test passes!
-describe('POST /api/auth/register - for driver user type', () => {
+xdescribe('POST /api/auth/register - for driver user type', () => {
   beforeEach(async () => {
     await db('riders').truncate();
     await db('drivers').truncate();
+    await db('reviews').truncate();
   });
 
   it('should return 400 and proper message if missing information', async () => {
@@ -172,10 +175,11 @@ describe('POST /api/auth/register - for driver user type', () => {
 });
 
 // Test passes!
-describe('POST /api/auth/login', () => {
+xdescribe('POST /api/auth/login', () => {
   beforeEach(async () => {
     await db('riders').truncate();
     await db('drivers').truncate();
+    await db('reviews').truncate();
   });
 
   it('should return 500 and proper message if empty field submitted', async () => {
@@ -264,7 +268,7 @@ describe('POST /api/auth/login', () => {
 });
 
 // Test passes!
-describe('GET /api/auth/users', () => {
+xdescribe('GET /api/auth/users', () => {
   it('should return http 200 status code', async () => {
     const response = await request(server).get('/api/auth/users');
 

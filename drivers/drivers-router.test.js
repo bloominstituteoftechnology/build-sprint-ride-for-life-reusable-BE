@@ -1,18 +1,107 @@
 const request = require('supertest');
 
 const server = require('../api/server');
+const db = require('../data/db-config');
+
+// Test passes!
+describe('GET /api/drivers', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
+
+  it('should require authorization', async () => {
+    const response = await request(server).get('/api/drivers');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+
+  it('should return 200 when authorized', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .get('/api/drivers')
+      .set('authorization', auth.body.token);
+
+    expect(response.status).toBe(200);
+    expect(response.type).toMatch(/json/i);
+  });
+});
 
 // Needs to be tested
-xdescribe('GET /api/drivers', () => {});
+xdescribe('GET /api/drivers/:id', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
+
+  it('should require authorization', async () => {
+    const response = await request(server).get('/api/drivers/1');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+});
 
 // Needs to be tested
-xdescribe('GET /api/drivers/:id', () => {});
+xdescribe('GET /api/drivers/:id/reviews', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
+
+  it('should require authorization', async () => {
+    const response = await request(server).get('/api/drivers/1/reviews');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+});
 
 // Needs to be tested
-xdescribe('GET /api/drivers/:id/reviews', () => {});
+xdescribe('PUT /api/drivers/:id', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
+
+  it('should require authorization', async () => {
+    const response = await request(server).put('/api/drivers/1');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+});
 
 // Needs to be tested
-xdescribe('PUT /api/drivers/:id', () => {});
+xdescribe('DEL /api/drivers/:id', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
 
-// Needs to be tested
-xdescribe('DEL /api/drivers/:id', () => {});
+  it('should require authorization', async () => {
+    const response = await request(server).delete('/api/drivers/1');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+});
