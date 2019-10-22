@@ -122,7 +122,7 @@ xdescribe('GET /api/drivers/:id/reviews', () => {
   });
 });
 
-// Needs to be tested
+// Test passes!
 xdescribe('PUT /api/drivers/:id', () => {
   beforeEach(async () => {
     await db('riders').truncate();
@@ -135,6 +135,87 @@ xdescribe('PUT /api/drivers/:id', () => {
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: 'Token not found' });
+  });
+
+  it('should return 400 and proper message if missing driver information', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .put('/api/drivers/1')
+      .set('authorization', auth.body.token)
+      .send({ password: 'pass' });
+
+    console.log(response.body);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: 'Please provide driver information to update',
+    });
+  });
+
+  it('should return 500 and proper message if rider not found', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .put('/api/drivers/2')
+      .set('authorization', auth.body.token)
+      .send({ password: 'pass', location: 'Updated Location' });
+
+    console.log(response.body);
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({
+      message: 'Error finding driver',
+    });
+  });
+
+  it('should return 200 and json if driver updated', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .put('/api/drivers/1')
+      .set('authorization', auth.body.token)
+      .send({ password: 'pass', location: 'Updated Location' });
+
+    console.log(response.body);
+
+    expect(response.status).toBe(200);
   });
 });
 
