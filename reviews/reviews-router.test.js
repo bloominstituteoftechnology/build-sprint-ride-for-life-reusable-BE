@@ -3,12 +3,6 @@ const request = require('supertest');
 const server = require('../api/server');
 const db = require('../data/db-config');
 
-// describe('These tests pass', () => {
-//   it('filler', () => {
-//     expect('true').toBe('true');
-//   });
-// });
-
 // Test passes!
 xdescribe('GET /api/reviews', () => {
   beforeEach(async () => {

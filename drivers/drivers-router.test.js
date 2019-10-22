@@ -4,7 +4,7 @@ const server = require('../api/server');
 const db = require('../data/db-config');
 
 // Test passes!
-describe('GET /api/drivers', () => {
+xdescribe('GET /api/drivers', () => {
   beforeEach(async () => {
     await db('riders').truncate();
     await db('drivers').truncate();
@@ -42,7 +42,7 @@ describe('GET /api/drivers', () => {
   });
 });
 
-// Needs to be tested
+// Test passes!
 xdescribe('GET /api/drivers/:id', () => {
   beforeEach(async () => {
     await db('riders').truncate();
@@ -55,6 +55,54 @@ xdescribe('GET /api/drivers/:id', () => {
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: 'Token not found' });
+  });
+
+  it('should return 404 and proper message if error finding driver', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .get('/api/drivers/2')
+      .set('authorization', auth.body.token);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: 'Could not find driver with provided ID',
+    });
+  });
+
+  it('should return 200', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .get('/api/drivers/1')
+      .set('authorization', auth.body.token);
+
+    expect(response.status).toBe(200);
+    expect(response.type).toMatch(/json/i);
   });
 });
 
