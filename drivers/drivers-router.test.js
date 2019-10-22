@@ -165,7 +165,7 @@ xdescribe('PUT /api/drivers/:id', () => {
     });
   });
 
-  it('should return 500 and proper message if rider not found', async () => {
+  it('should return 500 and proper message if driver not found', async () => {
     const auth = await request(server)
       .post('/api/auth/register')
       .send({
@@ -219,7 +219,7 @@ xdescribe('PUT /api/drivers/:id', () => {
   });
 });
 
-// Needs to be tested
+// Test passes!
 xdescribe('DEL /api/drivers/:id', () => {
   beforeEach(async () => {
     await db('riders').truncate();
@@ -232,5 +232,56 @@ xdescribe('DEL /api/drivers/:id', () => {
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({ message: 'Token not found' });
+  });
+
+  it('should return 404 and proper message if driver not found', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .del('/api/drivers/2')
+      .set('authorization', auth.body.token);
+
+    console.log(response.body);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: 'Invalid driver ID',
+    });
+  });
+
+  it('should return 200 and json if driver deleted', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .del('/api/drivers/1')
+      .set('authorization', auth.body.token);
+
+    console.log(response.body);
+
+    expect(response.status).toBe(200);
   });
 });

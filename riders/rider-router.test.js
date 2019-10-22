@@ -194,5 +194,65 @@ xdescribe('PUT /api/riders/:id', () => {
   });
 });
 
-// Needs to be tested
-xdescribe('DEL /api/riders/:id', () => {});
+// Test passes!
+xdescribe('DEL /api/riders/:id', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
+
+  it('should require authorization', async () => {
+    const response = await request(server).delete('/api/riders/1');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+
+  it('should return 404 and proper message if rider not found', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'rider',
+        name: 'Test Name',
+        location: 'Test Location',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .del('/api/riders/2')
+      .set('authorization', auth.body.token);
+
+    console.log(response.body);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: 'Invalid rider ID',
+    });
+  });
+
+  it('should return 200 and json if rider deleted', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'rider',
+        name: 'Test Name',
+        location: 'Test Location',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const response = await request(server)
+      .del('/api/riders/1')
+      .set('authorization', auth.body.token);
+
+    console.log(response.body);
+
+    expect(response.status).toBe(200);
+  });
+});
