@@ -49,6 +49,7 @@ router.get('/:id', (req, res) => {
 router.get('/:id/reviews', (req, res) => {
   Drivers.findReviewsById(req.params.id)
     .then(reviews => {
+      // console.log('drivers reviews', reviews);
       if (reviews.length) {
         const updatedReviews = reviews.map(review => {
           if (review.anonymous === 1 || review.anonymous === true) {

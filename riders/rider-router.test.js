@@ -101,7 +101,66 @@ xdescribe('GET /api/riders/:id', () => {
 });
 
 // Needs to be tested
-xdescribe('GET /api/riders/:id/reviews', () => {});
+xdescribe('GET /api/riders/:id/reviews', () => {
+  beforeEach(async () => {
+    await db('riders').truncate();
+    await db('drivers').truncate();
+    await db('reviews').truncate();
+  });
+
+  it('should require authorization', async () => {
+    const response = await request(server).get('/api/riders/1/reviews');
+
+    expect(response.status).toBe(401);
+    expect(response.body).toEqual({ message: 'Token not found' });
+  });
+
+  it('should return http 200 status code when authorized', async () => {
+    const driver = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestDriverName',
+        password: 'pass',
+        role: 'driver',
+        name: 'Test Name',
+        location: 'Test Location',
+        price: 150,
+        bio: 'Test Bio',
+      });
+
+    expect(driver.status).toBe(201);
+
+    const rider = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestRiderName',
+        password: 'pass',
+        role: 'rider',
+        name: 'Test Name',
+        location: 'Test Location',
+      });
+
+    expect(rider.status).toBe(201);
+
+    await db('reviews').insert(
+      {
+        stars: 5,
+        date: '10/22/2019',
+        driver_id: 1,
+        rider_id: 1,
+        anonymous: true,
+      },
+      'id',
+    );
+
+    const response = await request(server)
+      .get('/api/riders/1/reviews')
+      .set('authorization', driver.body.token);
+
+    expect(response.status).toBe(200);
+    expect(response.type).toMatch(/json/i);
+  });
+});
 
 // Test passes!
 xdescribe('PUT /api/riders/:id', () => {
