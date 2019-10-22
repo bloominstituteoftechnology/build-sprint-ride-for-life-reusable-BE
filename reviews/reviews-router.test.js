@@ -239,7 +239,7 @@ describe('PUT /api/review/:id', () => {
   });
 });
 
-// Needs to be tested
+// Test passes!
 describe('DEL /api/review/:id', () => {
   beforeEach(async () => {
     await db('riders').truncate();
@@ -254,7 +254,73 @@ describe('DEL /api/review/:id', () => {
     expect(response.body).toEqual({ message: 'Token not found' });
   });
 
-  xit('should return 404 if invalid review id', async () => {});
+  it('should return 404 if invalid review id', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'rider',
+        name: 'Test Name',
+        location: 'Test Location',
+      });
 
-  xit('should return 200 if review deleted', async () => {});
+    expect(auth.status).toBe(201);
+
+    const post = await request(server)
+      .post('/api/reviews')
+      .set('authorization', auth.body.token)
+      .send({
+        stars: 5,
+        date: '10/22/2019',
+        driver_id: 1,
+        rider_id: 1,
+        anonymous: true,
+      });
+
+    expect(post.status).toBe(201);
+
+    const response = await request(server)
+      .delete('/api/reviews/2')
+      .set('authorization', auth.body.token);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({
+      message: 'Invalid review ID',
+    });
+  });
+
+  it('should return 200 if review deleted', async () => {
+    const auth = await request(server)
+      .post('/api/auth/register')
+      .send({
+        username: 'TestUsername',
+        password: 'pass',
+        role: 'rider',
+        name: 'Test Name',
+        location: 'Test Location',
+      });
+
+    expect(auth.status).toBe(201);
+
+    const post = await request(server)
+      .post('/api/reviews')
+      .set('authorization', auth.body.token)
+      .send({
+        stars: 5,
+        date: '10/22/2019',
+        driver_id: 1,
+        rider_id: 1,
+        anonymous: true,
+      });
+
+    expect(post.status).toBe(201);
+
+    const response = await request(server)
+      .delete('/api/reviews/1')
+      .set('authorization', auth.body.token);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ message: 'The review has been deleted' });
+  });
 });
