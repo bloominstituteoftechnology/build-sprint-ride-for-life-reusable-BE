@@ -75,7 +75,7 @@ router.get('/:id/reviews', (req, res) => {
     });
 });
 
-// PUT /api/drivers/:id endpoint -
+// PUT /api/drivers/:id endpoint - Functional!
 router.put('/:id', checkPassword, (req, res) => {
   const { id } = req.params;
   const changes = req.body;

@@ -84,6 +84,7 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .first()
     .then(user => {
+      console.log('user findBy', user);
       if (user && bcrypt.compareSync(password, user.password)) {
         // console.log(user);
         const token = generateToken(user);
@@ -109,7 +110,7 @@ router.post('/login', (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({ message: 'Error finding user' });
+      res.status(500).json({ message: 'Database error in finding user' });
     });
 });
 
