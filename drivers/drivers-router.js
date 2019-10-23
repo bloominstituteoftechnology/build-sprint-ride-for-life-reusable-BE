@@ -155,8 +155,28 @@ router.post('/:id/image', (req, res) => {
   const file = req.files.image;
   // console.log(file);
   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-    res.json({ success: true, result });
+    // console.log('CLOUDINARY', result);
+    Drivers.addProfilePic({ url: result.url, driver_id: req.params.id })
+      .then(output => {
+        res.json({ success: true, result });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: 'Error uploading to Cloudinary' });
+      });
   });
+});
+
+// GET /api/drivers/:id/images endpoint -
+router.get('/:id/images', (req, res) => {
+  Drivers.findPics()
+    .then(pictures => {
+      res.status(200).json(pictures);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to get profile picture urls' });
+    });
 });
 
 module.exports = router;

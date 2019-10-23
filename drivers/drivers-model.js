@@ -8,6 +8,8 @@ module.exports = {
   findReviewsById,
   remove,
   update,
+  findPics,
+  addProfilePic,
 };
 
 function add(user) {
@@ -35,18 +37,20 @@ function find() {
     .orderBy('drivers.id');
 }
 
-function findById(id) {
+function findById(driver_id) {
   return db('drivers')
+    .join('driverpics', 'driverpics.driver_id', 'drivers.id')
     .select(
-      'id as driver_id',
+      'drivers.id as driver_id',
       'username',
       'name',
       'location',
       'price',
       'bio',
       'available',
+      'url',
     )
-    .where({ id })
+    .where({ driver_id })
     .first();
 }
 
@@ -84,4 +88,12 @@ function update(changes, id) {
     .where({ id })
     .update(changes)
     .then(count => findById(id));
+}
+
+function findPics() {
+  return db('driverpics');
+}
+
+function addProfilePic(pic) {
+  return db('driverpics').insert(pic, 'id');
 }
