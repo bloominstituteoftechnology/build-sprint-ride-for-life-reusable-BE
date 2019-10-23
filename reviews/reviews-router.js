@@ -2,7 +2,7 @@ const express = require('express');
 
 const Reviews = require('./reviews-model');
 
-const router = express();
+const router = express.Router();
 
 // GET /api/reviews endpoint - Functional!
 router.get('/', (req, res) => {

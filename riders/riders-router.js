@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const Riders = require('./riders-model');
 const checkPassword = require('./riderpw-middleware');
 
-const router = express();
+const router = express.Router();
 
 // GET /api/riders endpoint - Functional!
 router.get('/', (req, res) => {

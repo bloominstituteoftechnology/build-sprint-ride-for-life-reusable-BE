@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const Drivers = require('./drivers-model');
 const checkPassword = require('./driverpw-middleware');
 
-const router = express();
+const router = express.Router();
 
 // GET /api/drivers endpoint - Functional!
 router.get('/', (req, res) => {

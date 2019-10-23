@@ -10,7 +10,7 @@ const Users = require('./auth-model');
 const validateUsername = require('./username-middleware.js');
 const secrets = require('../config/secrets');
 
-const router = express();
+const router = express.Router();
 
 // POST /api/auth/register endpoint - Functional!
 router.post('/register', validateUsername, (req, res) => {
