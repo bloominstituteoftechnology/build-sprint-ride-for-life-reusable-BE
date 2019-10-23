@@ -35,6 +35,7 @@ function find() {
       'bio',
       'available',
       'url',
+      'driverpics.id as image_id',
     )
     .join('roles', 'roles.id', 'drivers.role_id')
     .orderBy('drivers.id');
@@ -52,6 +53,7 @@ function findById(id) {
       'bio',
       'available',
       'url',
+      'driverpics.id as image_id',
     )
     .where('drivers.id', id)
     .first();
