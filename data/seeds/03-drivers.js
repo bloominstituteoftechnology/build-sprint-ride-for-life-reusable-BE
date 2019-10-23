@@ -93,5 +93,15 @@ exports.seed = function(knex) {
       bio: `Todd is Walt's former lab assistant whose uncle's prison connections prove invaluable.`,
       available: 1,
     },
+    {
+      username: 'Doge',
+      password: bcrypt.hashSync('driver', 8),
+      role_id: 2,
+      name: 'Doge',
+      location: 'Internet',
+      price: 200,
+      bio: `dogecoin.com`,
+      available: 1,
+    },
   ]);
 };

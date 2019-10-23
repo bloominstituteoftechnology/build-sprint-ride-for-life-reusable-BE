@@ -5,6 +5,12 @@ const cloudinary = require('cloudinary').v2;
 const Drivers = require('./drivers-model');
 const checkPassword = require('./driverpw-middleware');
 
+// STRETCH - Twilio
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+const client = require('twilio')(accountSid, authToken);
+
 const router = express.Router();
 
 // GET /api/drivers endpoint - Functional!
@@ -167,11 +173,11 @@ router.post('/:id/image', (req, res) => {
   });
 });
 
-// PUT /api/drivers/:id/image endpoint -
+// PUT /api/drivers/:id/image endpoint - Functional!
 router.put('/:id/image', (req, res) => {
   const file = req.files.image;
-  // console.log('REQ', req.files);
   // console.log('REQ', req);
+  // console.log('REQ.FILES', req.files);
   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     // console.log('CLOUDINARY', result);
     Drivers.updateProfilePic({ url: result.url }, req.body.image_id)
@@ -194,6 +200,34 @@ router.get('/:id/images', (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).json({ message: 'Failed to get profile picture urls' });
+    });
+});
+
+// STRETCH - Twilio
+
+// POST /api/drivers/:id/message endpoint
+router.post('/:id/message', (req, res) => {
+  const message = req.body;
+  // console.log(message);
+  Drivers.findById(req.params.id)
+    .then(driver => {
+      client.messages
+        .create({
+          body: `Hello, ${driver.name}! ${message.rider} has requested a ride in ${message.location}!`,
+          from: '+16504693967',
+          // to: '+17343777063',
+          to: driver.phonenumber,
+        })
+        .then(message => {
+          console.log(message.sid);
+          res.json({
+            message: `Ride For Life request to ${driver.name} has been successfully made!`,
+          });
+        });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to get driver' });
     });
 });
 

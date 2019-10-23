@@ -25,6 +25,7 @@ function add(user) {
 function find() {
   return db('drivers')
     .leftJoin('driverpics', 'driverpics.driver_id', 'drivers.id')
+    .leftJoin('phonenumbers', 'phonenumbers.driver_id', 'drivers.id')
     .select(
       'drivers.id as driver_id',
       'username',
@@ -36,6 +37,7 @@ function find() {
       'available',
       'url',
       'driverpics.id as image_id',
+      'phonenumber',
     )
     .join('roles', 'roles.id', 'drivers.role_id')
     .orderBy('drivers.id');
@@ -44,6 +46,7 @@ function find() {
 function findById(id) {
   return db('drivers')
     .leftJoin('driverpics', 'driverpics.driver_id', 'drivers.id')
+    .leftJoin('phonenumbers', 'phonenumbers.driver_id', 'drivers.id')
     .select(
       'drivers.id',
       'username',
@@ -54,6 +57,7 @@ function findById(id) {
       'available',
       'url',
       'driverpics.id as image_id',
+      'phonenumber',
     )
     .where('drivers.id', id)
     .first();
