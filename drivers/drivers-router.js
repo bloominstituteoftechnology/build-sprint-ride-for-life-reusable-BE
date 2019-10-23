@@ -150,7 +150,7 @@ cloudinary.config({
   api_secret: '5e23u1Zejlw6_vgBA0usMoRa958',
 });
 
-// POST /api/drivers/:id/image endpoint -
+// POST /api/drivers/:id/image endpoint - Functional!
 router.post('/:id/image', (req, res) => {
   const file = req.files.image;
   // console.log(file);
@@ -167,7 +167,23 @@ router.post('/:id/image', (req, res) => {
   });
 });
 
-// GET /api/drivers/:id/images endpoint -
+// PUT /api/drivers/:id/image endpoint -
+router.put('/:id/image', (req, res) => {
+  const file = req.files.image;
+  cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    // console.log('CLOUDINARY', result);
+    Drivers.updateProfilePic({ url: result.url }, req.params.id)
+      .then(output => {
+        res.json({ success: true, result });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: 'Error uploading to Cloudinary' });
+      });
+  });
+});
+
+// GET /api/drivers/:id/images endpoint - Functional! (Temporary)
 router.get('/:id/images', (req, res) => {
   Drivers.findPics()
     .then(pictures => {

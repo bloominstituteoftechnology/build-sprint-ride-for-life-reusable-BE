@@ -10,6 +10,7 @@ module.exports = {
   update,
   findPics,
   addProfilePic,
+  updateProfilePic,
 };
 
 function add(user) {
@@ -96,4 +97,11 @@ function findPics() {
 
 function addProfilePic(pic) {
   return db('driverpics').insert(pic, 'id');
+}
+
+function updateProfilePic(changes, id) {
+  return db('driverpics')
+    .where({ id })
+    .update(changes)
+    .then(count => findById(id));
 }
