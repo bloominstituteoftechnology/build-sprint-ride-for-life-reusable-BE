@@ -24,6 +24,7 @@ function add(user) {
 
 function find() {
   return db('drivers')
+    .leftJoin('driverpics', 'driverpics.driver_id', 'drivers.id')
     .select(
       'drivers.id as driver_id',
       'username',
@@ -33,6 +34,7 @@ function find() {
       'price',
       'bio',
       'available',
+      'url',
     )
     .join('roles', 'roles.id', 'drivers.role_id')
     .orderBy('drivers.id');
