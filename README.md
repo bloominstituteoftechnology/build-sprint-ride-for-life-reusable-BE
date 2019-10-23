@@ -18,19 +18,23 @@ Jonathan Ho
 ## Tech Stack
 
 - Node.js
-- Express  
+- Express
 
 **Dependencies:**
 
 - brcyptjs
+- cloudinary
 - cors
 - dotenv
+- express
+- express-fileupload
 - helmet
 - jsonwebtoken
 - knex
 - knex-cleaner
 - pg
 - sqlite3
+- twilio
 
 **Development Dependencies:**
 
@@ -48,7 +52,3 @@ Jonathan Ho
 ## Postman Documentation
 
 https://documenter.getpostman.com/view/8985891/SVzua1MZ?version=latest
-
-## Endpoints
-
-More detailed description about endpoints to come...
