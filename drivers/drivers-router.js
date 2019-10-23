@@ -170,9 +170,10 @@ router.post('/:id/image', (req, res) => {
 // PUT /api/drivers/:id/image endpoint -
 router.put('/:id/image', (req, res) => {
   const file = req.files.image;
+  const imageId = req.files.image_id;
   cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     // console.log('CLOUDINARY', result);
-    Drivers.updateProfilePic({ url: result.url }, req.params.id)
+    Drivers.updateProfilePic({ url: result.url }, imageId)
       .then(output => {
         res.json({ success: true, result });
       })
