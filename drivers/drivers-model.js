@@ -37,11 +37,11 @@ function find() {
     .orderBy('drivers.id');
 }
 
-function findById(driver_id) {
+function findById(id) {
   return db('drivers')
-    .join('driverpics', 'driverpics.driver_id', 'drivers.id')
+    .leftJoin('driverpics', 'driverpics.driver_id', 'drivers.id')
     .select(
-      'drivers.id as driver_id',
+      'drivers.id',
       'username',
       'name',
       'location',
@@ -50,7 +50,7 @@ function findById(driver_id) {
       'available',
       'url',
     )
-    .where({ driver_id })
+    .where('drivers.id', id)
     .first();
 }
 
