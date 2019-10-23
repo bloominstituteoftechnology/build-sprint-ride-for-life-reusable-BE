@@ -61,7 +61,16 @@ router.post('/register', validateUsername, (req, res) => {
           const token = generateToken(user);
           saved.available =
             saved.available === 1 || saved.available === true ? true : false;
-          res.status(201).json({ driver: saved, token });
+          Drivers.addProfilePic({ url: null, driver_id: saved.id })
+            .then(output => {
+              res.status(201).json({ driver: saved, token });
+            })
+            .catch(err => {
+              console.log(err);
+              res
+                .status(500)
+                .json({ message: 'Error adding entry to driver pics table' });
+            });
         })
         .catch(err => {
           console.log(err);
