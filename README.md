@@ -45,8 +45,8 @@ Jonathan Ho
 
 ## Deployment
 
-**Marketing Site:** Awaiting deployment  
-**React App:** Awaiting deployment  
+**Marketing Site:** https://rfl.netlify.com/drivers  
+**React App:** https://saferidefl.netlify.com/  
 **Backend API:** https://rideforlife-backend.herokuapp.com/
 
 ## Postman Documentation
