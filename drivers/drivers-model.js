@@ -103,9 +103,9 @@ function addProfilePic(pic) {
   return db('driverpics').insert(pic, 'id');
 }
 
-function updateProfilePic(changes, id) {
+function updateProfilePic(changes, image_id) {
   return db('driverpics')
-    .where({ id })
+    .where({ image_id })
     .update(changes)
     .then(count => findById(id));
 }
