@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const cloudinary = require('cloudinary').v2;
 
 const Drivers = require('./drivers-model');
 const checkPassword = require('./driverpw-middleware');
@@ -140,6 +141,22 @@ router.delete('/:id', (req, res) => {
       console.log(err);
       res.status(500).json({ message: 'Error deleting the driver' });
     });
+});
+
+// STRETCH - Cloudinary
+cloudinary.config({
+  cloud_name: 'hnoj9zg1i',
+  api_key: '232295788793519',
+  api_secret: '5e23u1Zejlw6_vgBA0usMoRa958',
+});
+
+// POST /api/drivers/:id/image endpoint -
+router.post('/:id/image', (req, res) => {
+  const file = req.files.image;
+  // console.log(file);
+  cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    res.json({ success: true, result });
+  });
 });
 
 module.exports = router;

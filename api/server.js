@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('../middleware/logger');
-// const ejs = require('ejs');
+const fileupload = require('express-fileupload');
 
 const AuthRouter = require('../auth/auth-router');
 const RiderRouter = require('../riders/riders-router');
@@ -23,13 +23,12 @@ server.use(logger);
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
+server.use(fileupload({ useTempFiles: true }));
 
 server.use('/api/auth', AuthRouter);
 server.use('/api/riders', restricted, RiderRouter);
 server.use('/api/drivers', restricted, DriverRouter);
 server.use('/api/reviews', restricted, ReviewRouter);
-
-server.use(express.static('./public'));
 
 // Stretch
 server.use('/api/images', ImagesRouter);
