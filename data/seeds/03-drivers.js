@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 exports.seed = function(knex) {
   return knex('drivers').insert([
     {
-      username: 'Heisenberg',
+      username: 'heisenberg',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Walter White',
@@ -14,7 +14,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Skyler',
+      username: 'skyler',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Skyler White',
@@ -24,7 +24,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Jesse',
+      username: 'jesse',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Jesse Pinkman',
@@ -34,7 +34,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'WaltJr',
+      username: 'waltjr',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Walter White Jr',
@@ -44,7 +44,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Hank',
+      username: 'hank',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Hank Schrader',
@@ -54,7 +54,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Marie',
+      username: 'marie',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Marie Schrader',
@@ -64,7 +64,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Saul',
+      username: 'saul',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Saul Goodman',
@@ -74,7 +74,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Lydia',
+      username: 'lydia',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Lydia Rodarte-Quayle',
@@ -84,7 +84,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Todd',
+      username: 'todd',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Todd Alquist',
@@ -94,7 +94,7 @@ exports.seed = function(knex) {
       available: 1,
     },
     {
-      username: 'Doge',
+      username: 'doge',
       password: bcrypt.hashSync('driver', 8),
       role_id: 2,
       name: 'Doge',

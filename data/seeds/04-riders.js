@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 exports.seed = function(knex) {
   return knex('riders').insert([
     {
-      username: 'Robert',
+      username: 'robert',
       password: bcrypt.hashSync('rider', 8),
       role_id: 3,
       name: 'Robert Gordon',
@@ -11,7 +11,7 @@ exports.seed = function(knex) {
       searching: 1,
     },
     {
-      username: 'Stephanie',
+      username: 'stephanie',
       password: bcrypt.hashSync('rider', 8),
       role_id: 3,
       name: 'Stephanie Butenhof',
@@ -19,7 +19,7 @@ exports.seed = function(knex) {
       searching: 1,
     },
     {
-      username: 'Arin',
+      username: 'arin',
       password: bcrypt.hashSync('rider', 8),
       role_id: 3,
       name: 'Arin Ramer',
@@ -27,7 +27,7 @@ exports.seed = function(knex) {
       searching: 1,
     },
     {
-      username: 'Mark',
+      username: 'mark',
       password: bcrypt.hashSync('rider', 8),
       role_id: 3,
       name: 'Mark King',
@@ -35,7 +35,7 @@ exports.seed = function(knex) {
       searching: 1,
     },
     {
-      username: 'Jonathan',
+      username: 'jonathan',
       password: bcrypt.hashSync('rider', 8),
       role_id: 3,
       name: 'Jonathan Ho',
@@ -43,7 +43,7 @@ exports.seed = function(knex) {
       searching: 1,
     },
     {
-      username: 'Thomas',
+      username: 'thomas',
       password: bcrypt.hashSync('rider', 8),
       role_id: 3,
       name: 'Thomas Utsey',

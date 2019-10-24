@@ -88,7 +88,9 @@ router.post('/register', validateUsername, (req, res) => {
 
 // POST /api/auth/login endpoint - Functional!
 router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  let { username, password } = req.body;
+
+  username = username.toLowerCase();
 
   Users.findBy({ username })
     .first()

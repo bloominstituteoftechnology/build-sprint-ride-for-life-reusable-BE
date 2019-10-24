@@ -1,7 +1,9 @@
 const Users = require('./auth-model');
 
 module.exports = (req, res, next) => {
-  const { username } = req.body;
+  let { username } = req.body;
+
+  username = username.toLowerCase();
 
   Users.findBy({ username })
     .first()
