@@ -72,5 +72,13 @@ exports.seed = function(knex) {
       rider_id: 5,
       anonymous: 1,
     },
+    {
+      stars: 5,
+      comment: `So amaze.`,
+      date: '10/23/2019',
+      driver_id: 10,
+      rider_id: 1,
+      anonymous: 0,
+    },
   ]);
 };
