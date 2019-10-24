@@ -90,6 +90,8 @@ router.post('/register', validateUsername, (req, res) => {
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
 
+  // console.log(req.body)
+
   username = username.toLowerCase();
 
   Users.findBy({ username })
