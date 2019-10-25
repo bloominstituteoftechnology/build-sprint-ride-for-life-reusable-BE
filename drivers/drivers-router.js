@@ -208,7 +208,7 @@ router.get('/:id/images', (req, res) => {
 // POST /api/drivers/:id/message endpoint
 router.post('/:id/message', (req, res) => {
   const message = req.body;
-  // console.log(message);
+  console.log(message);
   Drivers.findById(req.params.id)
     .then(driver => {
       client.messages
