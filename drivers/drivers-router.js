@@ -205,30 +205,29 @@ router.get('/:id/images', (req, res) => {
 
 // STRETCH - Twilio
 
-// POST /api/drivers/:id/message endpoint
-router.post('/:id/message', (req, res) => {
-  const message = req.body;
-  console.log('Message received by backend endpoint:', message);
-  Drivers.findById(req.params.id)
-    .then(driver => {
-      client.messages
-        .create({
-          body: `Hello, ${driver.name}! ${message.rider} has requested a ride in ${message.location}!`,
-          from: '+16504693967',
-          // to: '+17343777063',
-          to: driver.phonenumber,
-        })
-        .then(message => {
-          console.log(message.sid);
-          res.json({
-            message: `Ride For Life request to ${driver.name} has been successfully made!`,
-          });
-        });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({ message: 'Failed to get driver' });
-    });
-});
+// // POST /api/drivers/:id/message endpoint - FUNCTIONAL - TURNED OFF
+// router.post('/:id/message', (req, res) => {
+//   const message = req.body;
+//   console.log('Message received by backend endpoint:', message);
+//   Drivers.findById(req.params.id)
+//     .then(driver => {
+//       client.messages
+//         .create({
+//           body: `Hello, ${driver.name}! ${message.rider} has requested a ride in ${message.location}!`,
+//           from: '+16504693967',
+//           to: driver.phonenumber,
+//         })
+//         .then(message => {
+//           console.log(message.sid);
+//           res.json({
+//             message: `Ride For Life request to ${driver.name} has been successfully made!`,
+//           });
+//         });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status(500).json({ message: 'Failed to get driver' });
+//     });
+// });
 
 module.exports = router;
